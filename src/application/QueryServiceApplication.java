@@ -4,7 +4,8 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
-import resource.QueryResource;
+import resource.query.QueryResource;
+import resource.report.ReportResource;
 
 public class QueryServiceApplication extends Application {
 
@@ -18,6 +19,7 @@ public class QueryServiceApplication extends Application {
 
         // Defines only one route
         router.attach("/phoenix", QueryResource.class);
+        router.attach("/report", ReportResource.class);
 
         return router;
     }

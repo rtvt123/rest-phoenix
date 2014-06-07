@@ -1,4 +1,4 @@
-package resource;
+package resource.query;
 
 import org.apache.log4j.Logger;
 import org.restlet.resource.Get;
@@ -19,7 +19,7 @@ public class QueryResource extends ServerResource {
     	int ttl;
     	long startTime, endTime, response_time;
 		boolean isOk = true, isExisted = true;
-		String query = null, result = null, queryType = null, strDayTime = null;
+		String query = null, result = null, queryType, strDayTime, root = null;
 		Util util = new Util();
 		ConvertDate cv = new ConvertDate();
 		
@@ -30,14 +30,21 @@ public class QueryResource extends ServerResource {
 			System.out.println("--- strDayTime --- " + strDayTime);
 
 	    	query = getQueryValue("query");
-	    	ttl = util.getIntFromString(getQueryValue("ttl"));
-
-	    	// check blask list
-	    	isOk = util.isOkPhoenixQuery(query);
-			
+	    	ttl = util.getIntFromParam(getQueryValue("ttl"));
+	    	
+	    	try {
+	    		root = util.getStrFromParam(getQueryValue("root"));
+			} catch (Exception e) {
+				System.out.println("--- NOT ROOT--- ");
+			}
+	    	
+	    	// check blask list if not root 
+	    	if (root == null || !root.equals(Cons.ROOT)) {
+		    	isOk = util.isOkPhoenixQuery(query);
+			}
+	    	
 	    	// process query
 			if (isOk) {
-				
 				// check existed result in cache layer
 				isExisted = util.checkExistedRedisKey(query);
 				
@@ -56,6 +63,8 @@ public class QueryResource extends ServerResource {
 					queryType = Cons.QUERY_FROM_PHOENIX;
 				}
 			} 
+			System.out.println("--- QUERY TYPE--- " + queryType);
+			
 			
 			// increase total query by one
 			util.incrByOne(strDayTime + Cons.TOTAL_QUERY);

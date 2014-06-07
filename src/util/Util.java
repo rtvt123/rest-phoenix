@@ -6,61 +6,71 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import redis.clients.jedis.Jedis;
 import util.factory.PhoenixConnectionFactory;
 import util.factory.RedisConnectionFactory;
 
+import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 public class Util {
 
-	public void readPhoenixConf(){
-		Properties prop = new Properties();
-		InputStream input = null;
-	 
+	public String getStrFromPropertiesFile(String proFile, String key){
+		String result = null;
+		Configuration config;
 		try {
-			input = new FileInputStream(Cons.PHOENIX_PROPERTIES);
-	 
-			// load a properties file
-			prop.load(input);
-	 
-			// get the property value and print it out
-			Cons.PHOENIX_CONN_STR = prop.getProperty("connection_string");
-			System.out.println(" --- PHOENIX_CONN_STR --- " + Cons.PHOENIX_CONN_STR);
+			config = new PropertiesConfiguration(proFile);
+			result = config.getString(key);
+			System.out.println(" --- FILE --- " + proFile + " --- KEY --- " + key + " --- RESULT --- " + result);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+		return result;
 	}
 	
-	public void readRedisConf(){
-		Properties prop = new Properties();
-		InputStream input = null;
-	 
+	public Set<String> getSetStrFromPropertiesFile(String proFile, String key){
+		String strArrResult[];
+		Set<String> sResult = null;
+		Configuration config;
 		try {
-			input = new FileInputStream(Cons.REDIS_PROPERTIES);
-	 
-			// load a properties file
-			prop.load(input);
-	 
-			// get the property value and print it out
-			Cons.REDIS_HOST = prop.getProperty("host");
-			Cons.REDIS_PORT = Integer.parseInt(prop.getProperty("port"));
-			Cons.REDIS_DB = Integer.parseInt(prop.getProperty("db"));
-			System.out.println(" --- REDIS INFO --- " + Cons.REDIS_HOST + "	" + Cons.REDIS_PORT + "	" + Cons.REDIS_DB);
+			config = new PropertiesConfiguration(proFile);
+			strArrResult = config.getStringArray(key);
+			sResult = Sets.newHashSet(strArrResult);
+			System.out.println(" --- FILE --- " + proFile + " --- KEY --- " + sResult);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+		return sResult;
 	}
 	
-	public int getIntFromString(String intVal){
+	public int getIntFromParam(String intVal){
 		int result;
 		try {
 			result = Integer.parseInt(intVal);
 		} catch (Exception e) {
 			result = 0;
+			System.out.println("--- NOT NUMBER--- ");
+		}
+		return result;
+	}
+	
+	public String getStrFromParam(String strVal){
+		String result;
+		try {
+			result = strVal;
+		} catch (Exception e) {
+			result = "0";
 			e.printStackTrace();
 		}
 		return result;
@@ -137,20 +147,11 @@ public class Util {
 		return isExisted;
 	}
 	
-	public void initPhoenixQueryBlackList(){
-		//Util.L_BLACK_LIST_QUERY.add(Util.BLACK_LIST_PHOENIX_QUERY_CREATE);
-		Cons.L_BLACK_LIST_QUERY.add(Cons.BLACK_LIST_PHOENIX_QUERY_CREATE);
-		Cons.L_BLACK_LIST_QUERY.add(Cons.BLACK_LIST_PHOENIX_QUERY_UPSERT);
-		Cons.L_BLACK_LIST_QUERY.add(Cons.BLACK_LIST_PHOENIX_QUERY_ALTER);
-		Cons.L_BLACK_LIST_QUERY.add(Cons.BLACK_LIST_PHOENIX_QUERY_DELETE);
-		Cons.L_BLACK_LIST_QUERY.add(Cons.BLACK_LIST_PHOENIX_QUERY_DROP);
-	}
-	
 	public boolean isOkPhoenixQuery(String query) {
 		boolean status = true;
 		String queryToLower = query.toLowerCase();
 		
-		for (String blackStr : Cons.L_BLACK_LIST_QUERY) {
+		for (String blackStr : Cons.S_BLACK_LIST_QUERY) {
 			if (queryToLower.contains(blackStr)) {
 				status = false;
 			}
