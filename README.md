@@ -18,7 +18,7 @@ The primary aims of this project is create a rest service for any client program
 - How to run it
 	+ Import all code and properties into your Eclipse project
 	+ Export project to runable Jar file with main class is RestletServer
-	+ java -jar <your_runable_jar>.jar 
+	+ java -jar your_runable_jar.jar 
 
 - Service
 	+ Query
