@@ -24,15 +24,15 @@ The primary aims of this project is create a rest service for any client program
 	+ Query
 		#### url
 			http://localhost:9090/phoenix
-		# param
+		#### param
 			query 	: phoenix's query
 			ttl 	: time to save result in cache
 			root 	: root account name with no black list
-		# sample
+		#### sample
 			http://localhost:9090:9090/phoenix?query=select%20*%20from%20test%20&root=admin&ttl=300
 			// %20 = whitespace
 			(http://localhost:9090:9090/phoenix?query=select * from test &root=admin&ttl=300)
-		# response
+		#### response
 			{
 				date: "2014-06-07",
 				day_time: 1402074000,
@@ -42,13 +42,13 @@ The primary aims of this project is create a rest service for any client program
 			}
 
 	+ Report
-		# url
+		#### url
 			http://localhost:9090/report
-		# param
+		#### param
 			num_day : number of recent day will response query statistic
-		# sample
+		#### sample
 			http://localhost:9090/report?num_day=1
-		# response
+		#### response
 			{
 				date: "2014-06-07",
 				day_time: 1402074000,
