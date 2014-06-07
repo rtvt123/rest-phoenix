@@ -22,7 +22,7 @@ The primary aims of this project is create a rest service for any client program
 
 - Service
 	+ Query
-		##### url
+		..* url
 			http://localhost:9090/phoenix
 		##### param
 			query 	: phoenix's query
