@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.devopsa</groupId>
+  <artifactId>rest-phoenix-mvn</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>rest-phoenix-mvn</name>
+  <description>Restful service for Apace Maven</description>
+  
+  <repositories>
+    <repository>
+        <id>maven-restlet</id>
+        <name>Public online Restlet repository</name>
+        <url>http://maven.restlet.org</url>
+    </repository>
+    <repository>
+        <id>maven-repository</id>
+        <name>Public online repository</name>
+        <url>http://maven-repository.com/</url>
+    </repository>
+  </repositories>
+  
+  
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>commons-configuration</groupId>
+  		<artifactId>commons-configuration</artifactId>
+  		<version>1.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.google.code.gson</groupId>
+  		<artifactId>gson</artifactId>
+  		<version>2.2.4</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.logging.log4j</groupId>
+  		<artifactId>log4j</artifactId>
+  		<version>2.0-rc1</version>
+  		<type>pom</type>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.phoenix</groupId>
+  		<artifactId>phoenix</artifactId>
+  		<version>4.0.0-incubating</version>
+  		<classifier>client</classifier>
+  	</dependency>
+  	<dependency>
+  		<groupId>redis.clients</groupId>
+  		<artifactId>jedis</artifactId>
+  		<version>2.5.1</version>
+  	</dependency>
+  	<!--  
+  	<dependency>
+  		<groupId>org.restlet</groupId>
+  		<artifactId>org.restlet.gae</artifactId>
+  		<version>2.0-M3</version>
+	</dependency>
+	-->
+  	<dependency>
+  		<groupId>net.devopsa</groupId>
+  		<artifactId>org.restlet</artifactId>
+  		<version>2.2.1</version>
+  		<systemPath>${project.basedir}/src/main/resources/lib/restlet/org.restlet.jar</systemPath>
+  		<scope>system</scope>
+  	</dependency>
+  </dependencies>
+</project>
