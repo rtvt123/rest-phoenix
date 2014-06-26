@@ -62,3 +62,11 @@ The primary aims of this project is create a rest service for any client program
 	+ phoenix.properties 		: 	config phoenix connection string
 	+ blacklist.properties 		: 	blacklist query (eg: contain "delete" string)
 	+ redis,properties			: 	config redis host, port, db for caching query result
+
+- List of lib (for non-maven developer)
+	+ commons-configuration-1.10.jar
+	+ gson-2.2.4.jar
+	+ log4j-1.2.17.jar
+	+ phoenix-4.0.0.2.1.1.0-385-client.jar
+	+ jedis-2.1.0.jar
+	+ org.restlet.jar (restlet-jse-2.2.1)
